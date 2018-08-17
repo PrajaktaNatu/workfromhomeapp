@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import moment from 'moment'
+//import nodemailer from 'nodemailer'
 
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
@@ -13,6 +14,8 @@ import CreateItem from './components/CreateItem.vue';
 import DisplayItem from './components/DisplayItem.vue';
 import EditItem from './components/EditItem.vue';
 
+import LoginComponent from "./components/login.vue"
+
 const routes = [
   {
         name: 'CreateItem',
@@ -21,14 +24,30 @@ const routes = [
     },
     {
           name: 'DisplayItem',
-          path: '/',
+          path: '/DisplayItem',
           component: DisplayItem
       },
+      {
+            name: 'secure',
+            path: '/secure',
+            component: DisplayItem
+        },
       {
             name: 'EditItem',
             path: '/edit/:id',
             component: EditItem
-        }
+      },
+      {
+            path: '/',
+            redirect: {
+                name: "login"
+            }
+        },
+        {
+            path: "/login",
+            name: "login",
+            component: LoginComponent
+        },
 ];
 
 const router = new VueRouter({ mode: 'history', routes: routes });
