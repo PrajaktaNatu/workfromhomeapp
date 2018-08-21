@@ -21,7 +21,7 @@
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">
-              <label>Date example:</label>
+              <label>Date applying for:</label>
               <datepicker placeholder="Select Date" v-model="item.example_date" @closed="formatDate()" :disabledDates="disabledDates"></datepicker>
             </div>
           </div>
@@ -36,6 +36,7 @@
 
 import Datepicker from "vuejs-datepicker/dist/vuejs-datepicker.esm.js";
 import moment from 'moment'
+import nodemailer from 'nodemailer'
 
   export default {
 
@@ -62,7 +63,8 @@ import moment from 'moment'
             this.item.example_date = momentObj.format('YYYY-MM-DD');
             console.log("Now date is: " + this.item.example_date);
       },
-      addItem(){
+
+    addItem(){
         let uri = 'http://localhost:4000/items/add';
         this.axios.post(uri, this.item).then((response) => {
           this.$router.push({name: 'DisplayItem'})

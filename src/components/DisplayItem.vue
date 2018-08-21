@@ -16,6 +16,7 @@
                 <td>Name</td>
                 <td>Reason</td>
                 <td>Applying for Date</td>
+                <td>Status</td>
                 <td>Actions</td>
             </tr>
             </thead>
@@ -25,8 +26,11 @@
                     <td>{{ item.name }}</td>
                     <td>{{ item.reason }}</td>
                     <td>{{ item.example_date | formatDate }}</td>
-                    <td><router-link :to="{name: 'EditItem', params: { id: item._id }}" class="btn btn-primary">Edit</router-link></td>
-                    <td><button class="btn btn-danger" v-on:click="deleteItem(item._id)">Delete</button></td>
+                    <td>{{ item.reqStatus }}</td>
+                    <td><router-link :to="{name: 'EditItem', params: { id: item._id }}" class="btn btn-primary" v-if="item.reqStatus === 'Pending'">Edit</router-link></td>
+                    <td><button class="btn btn-danger" v-on:click="deleteItem(item._id)" v-if="item.reqStatus === 'Pending'">Delete</button></td>
+                    <td><router-link :to="{name: 'ApproveReq', params: {id: item._id}}" class="btn btn-primary" v-if="item.reqStatus === 'Pending'">Approve</router-link></td>
+                    <td><router-link :to="{name: 'RejectReq', params: {id: item._id}}" class="btn btn-primary" v-if="item.reqStatus === 'Pending'">Reject</router-link></td>
                 </tr>
             </tbody>
         </table>
@@ -54,7 +58,6 @@ import moment from 'moment'
         computed: {
 
         },
-
         methods: {
             fetchItems()
             {
@@ -73,8 +76,7 @@ import moment from 'moment'
                   dates.push(new Date(value.example_date));
                 });
                 dates.forEach(function(i){
-            //        console.log(i + " " + i.getMonth() + 1);
-                    if((i.getMonth()) == moment().month()){
+                      if((i.getMonth()) == moment().month()){
                         count ++;
                     }
                 });
@@ -87,9 +89,11 @@ import moment from 'moment'
 
             deleteItem(id)
             {
-              let uri = 'http://localhost:4000/items/delete/'+id;
-              this.items.splice(id, 1);
+              let uri = 'http://localhost:4000/items/delete/'+ id;
+        //      this.items.splice(id, 1);
+              console.log(id);
               this.axios.get(uri);
+              this.fetchItems();
             }
         },
 
