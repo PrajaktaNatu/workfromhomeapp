@@ -11,6 +11,13 @@ var Item = new Schema({
   },
   example_date :  {
     type: Date
+  },
+  ApproverComments :{
+    type: String
+  },
+  reqStatus:{
+    type: String,
+    default: 'Pending'
   }
 },{
 	collection: 'items'
