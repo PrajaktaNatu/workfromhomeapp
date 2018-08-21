@@ -13,6 +13,8 @@ import App from './App.vue';
 import CreateItem from './components/CreateItem.vue';
 import DisplayItem from './components/DisplayItem.vue';
 import EditItem from './components/EditItem.vue';
+import ApproveReq from './components/ApproveReq.vue'
+import RejectReq from './components/RejectReq.vue'
 
 import LoginComponent from "./components/login.vue"
 
@@ -27,6 +29,16 @@ const routes = [
           path: '/DisplayItem',
           component: DisplayItem
       },
+      {
+            name: 'ApproveReq',
+            path: '/ApproveReq',
+            component: ApproveReq
+        },
+        {
+              name: 'RejectReq',
+              path: '/RejectReq',
+              component: RejectReq
+          },
       {
             name: 'secure',
             path: '/secure',
