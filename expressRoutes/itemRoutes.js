@@ -56,9 +56,46 @@ itemRoutes.route('/update/:id').post(function (req, res) {
   });
 });
 
+//approval method
+itemRoutes.route('/approve/:id').post(function (req, res) {
+  Item.findById(req.params.id, function(err, item) {
+    if (!item)
+      return next(new Error('Could not load Document'));
+    else {
+      item.ApproverComments = req.body.ApproverComments;
+      item.reqStatus = 'Approved';
+      item.save().then(item => {
+          res.json('request approved');
+      })
+      .catch(err => {
+            res.status(400).send("unable to update the database");
+      });
+    }
+  });
+});
+
+//rejection method
+itemRoutes.route('/reject/:id').post(function (req, res) {
+  Item.findById(req.params.id, function(err, item) {
+    if (!item)
+      return next(new Error('Could not load Document'));
+    else {
+      item.ApproverComments = req.body.ApproverComments;
+      item.reqStatus = 'Rejected';
+      item.save().then(item => {
+          res.json('request approved');
+      })
+      .catch(err => {
+            res.status(400).send("unable to update the database");
+      });
+    }
+  });
+});
+
 // Defined delete | remove | destroy route
 itemRoutes.route('/delete/:id').get(function (req, res) {
   Item.findByIdAndRemove({_id: req.params.id}, function(err, item){
+    console.log(req.body.name + " " + req.body.reason);
 		if(err) res.json(err);
 		else res.json('Successfully removed');
 	});
